@@ -11,6 +11,7 @@ const EMPTY_PHONE_NUMBER = ''
 const MessagesPage = () => {
   const [error, setError] = useState(null)
   const [phoneNumber, setPhoneNumber] = useState(EMPTY_PHONE_NUMBER)
+  const [interestedPhoneNumber, setInterestedPhoneNumber] = useState(EMPTY_PHONE_NUMBER)
   const [authentication] = useAuthentication()
   const history = useHistory()
 
@@ -23,14 +24,17 @@ const MessagesPage = () => {
   const handleError = (err) => setError(err)
 
   const handlePhoneNumberChange = (v) => setPhoneNumber(v)
+  const handleInterestedPhoneNumberChange = (v) => setInterestedPhoneNumber(v)
 
   const isPhoneNumberSelected = phoneNumber !== EMPTY_PHONE_NUMBER
 
   return <DefaultLayout>
     <h4>Messages</h4>
     <ErrorLabel error={error}/>
+    <input type="text" placeholder="Enter a phone number" value={interestedPhoneNumber} onChange={e => handleInterestedPhoneNumberChange(e.target.value)}/>
+    <br/>
     <PhoneNumberSelector onError={handleError} onPhoneNumberChange={handlePhoneNumberChange}/>
-    {isPhoneNumberSelected && <Tabs phoneNumber={phoneNumber}/>}
+    {isPhoneNumberSelected && <Tabs phoneNumber={phoneNumber} interestedPhoneNumber={interestedPhoneNumber}/>}
   </DefaultLayout>
 }
 

@@ -3,7 +3,7 @@ import MessageList from "../MessageList/MessageList";
 import MessageComposer from "../MessageComposer/MessageComposer";
 import {useState} from "react";
 
-export const Tabs = ({phoneNumber=''}) => {
+export const Tabs = ({phoneNumber='', interestedPhoneNumber=''}) => {
   const [activeTab, setActiveTab] = useState('messages')
   const handleActivateMessages = () => setActiveTab('messages')
   const handleActivateComposer = () => setActiveTab('composer')
@@ -25,7 +25,7 @@ export const Tabs = ({phoneNumber=''}) => {
         </ul>
       </div>
     </div>
-    {isMessagesActive && <MessageList phoneNumber={phoneNumber} onActionClick={handleActivateComposer}/>}
+    {isMessagesActive && <MessageList phoneNumber={phoneNumber} interestedPhoneNumber={interestedPhoneNumber} onActionClick={handleActivateComposer}/>}
     {isComposerActive && <MessageComposer phoneNumber={phoneNumber}/>}
   </>
 }

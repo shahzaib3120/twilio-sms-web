@@ -3,7 +3,7 @@ import useGetTwilioMessages from "../../hook/useGetTwilioMessages";
 import {Loading} from "./MessageListView";
 import MessageCard from "../MessageCard/MessageCard";
 
-const MessageList = ({phoneNumber = '', onActionClick=()=>{}, onComplete = () => {}, onError = () => {}}) => {
+const MessageList = ({phoneNumber = '',interestedPhoneNumber='', onActionClick=()=>{}, onComplete = () => {}, onError = () => {}}) => {
   const [loading, setLoading] = useState(true)
   const [messages, setMessages] = useState([])
   const [hasMounted, setHasMounted] = useState(false)
@@ -36,11 +36,11 @@ const MessageList = ({phoneNumber = '', onActionClick=()=>{}, onComplete = () =>
 
   useEffect(() => {
     if (hasMounted && (phoneNumber?.length > 0 && previousPhoneNumber !== phoneNumber)) {
-      getMessages({phoneNumber: phoneNumber}).then(handleSuccess).catch(onError).then(onComplete)
+      getMessages({phoneNumber: phoneNumber, interestedPhoneNumber: interestedPhoneNumber}).then(handleSuccess).catch(onError).then(onComplete)
       setPreviousPhoneNumber(phoneNumber)
       setLoading(true)
     }
-  }, [hasMounted, phoneNumber, previousPhoneNumber, getMessages, messages, handleSuccess, onError, onComplete, setPreviousPhoneNumber, setLoading])
+  }, [hasMounted, phoneNumber,interestedPhoneNumber, previousPhoneNumber, getMessages, messages, handleSuccess, onError, onComplete, setPreviousPhoneNumber, setLoading])
 
   if (loading) return <Loading className="h1 m-2"/>
 
