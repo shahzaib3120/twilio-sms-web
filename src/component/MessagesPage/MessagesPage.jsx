@@ -26,14 +26,16 @@ const MessagesPage = () => {
   const handlePhoneNumberChange = (v) => setPhoneNumber(v)
   const handleInterestedPhoneNumberChange = (v) => setInterestedPhoneNumber(v)
 
-  const isPhoneNumberSelected = phoneNumber !== EMPTY_PHONE_NUMBER
+  const isPhoneNumberSelected = (phoneNumber !== EMPTY_PHONE_NUMBER) && (interestedPhoneNumber !== EMPTY_PHONE_NUMBER)
 
   return <DefaultLayout>
     <h4>Messages</h4>
     <ErrorLabel error={error}/>
-    <input type="text" placeholder="Enter a phone number" value={interestedPhoneNumber} onChange={e => handleInterestedPhoneNumberChange(e.target.value)}/>
     <br/>
+    <h4>Thread of:</h4>
     <PhoneNumberSelector onError={handleError} onPhoneNumberChange={handlePhoneNumberChange}/>
+    <h4>with:</h4>
+    <input type="text" placeholder="Enter a phone number" value={interestedPhoneNumber} onChange={e => handleInterestedPhoneNumberChange(e.target.value)}/>
     {isPhoneNumberSelected && <Tabs phoneNumber={phoneNumber} interestedPhoneNumber={interestedPhoneNumber}/>}
   </DefaultLayout>
 }
