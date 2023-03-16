@@ -4,11 +4,11 @@ import MessageAction from "../MessageAction/MessageAction";
 import {useComposerContext} from "../../context/ComposerProvider"
 
 // const toBaseDirection = direction => direction.includes('inbound') ? 'inbound' : 'outbound'
-const toBaseDirection = (toNumber, iNumber) => toNumber === iNumber ? 'outbound' : 'inbound'
+const toBaseDirection = (fNumber, iNumber) => fNumber === iNumber ? 'outbound' : 'inbound'
 // const messageLabelClass = direction => `message-card-label text-code text-small ${toBaseDirection(direction)}`
-const messageLabelClass = (toNumber, iNumber) => `message-card-label text-code text-small ${toBaseDirection(toNumber, iNumber)}`
+const messageLabelClass = (fNumber, iNumber) => `message-card-label text-code text-small ${toBaseDirection(fNumber, iNumber)}`
 // const messageLabelRotation = direction => toBaseDirection(direction) === 'inbound' ? 180 : 0
-const messageLabelRotation = (toNumber, iNumber) => toBaseDirection(toNumber, iNumber) === 'inbound' ? 180 : 0
+const messageLabelRotation = (fNumber, iNumber) => toBaseDirection(fNumber, iNumber) === 'inbound' ? 180 : 0
 const copyStyle = {padding: '0', margin: '0'}
 
 const toDateString = (date) => {
@@ -37,15 +37,15 @@ const messageActionOnClick = (baseDirection, from, to, setComposerContext, onAct
 }
 
 const MessageCard = ({messageSid='', direction='', from='', to='',
-                      date=new Date(), status='', body='', interestedPhoneNumber='', onActionClick=()=>{}}) => {
+                      date=new Date(), status='', body='', fromNumber='', onActionClick=()=>{}}) => {
 
   const [ , setComposerContext] = useComposerContext()
-  const baseDirection = toBaseDirection(to, interestedPhoneNumber)
+  const baseDirection = toBaseDirection(from, fromNumber)
 
   return <>
     <div className="message-card">
-      <div className={messageLabelClass(to, interestedPhoneNumber)}>
-        <RightCircleFilled rotate={messageLabelRotation(to, interestedPhoneNumber)} />
+      <div className={messageLabelClass(from, fromNumber)}>
+        <RightCircleFilled rotate={messageLabelRotation(from, fromNumber)} />
       </div>
       <div className="message-card-main-container">
         <div className="message-card-header text-tiny">

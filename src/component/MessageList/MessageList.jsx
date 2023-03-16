@@ -55,7 +55,7 @@ const MessageList = ({phoneNumber = '',interestedPhoneNumber='', onActionClick=(
       status={v.status}
       date={v.date}
       onActionClick={onActionClick}
-      interestedPhoneNumber={interestedPhoneNumber}
+      fromNumber={phoneNumber}
     />)
 }
 
