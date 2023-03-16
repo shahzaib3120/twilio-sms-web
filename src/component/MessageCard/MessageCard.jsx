@@ -3,9 +3,12 @@ import "./MessageCard.css";
 import MessageAction from "../MessageAction/MessageAction";
 import {useComposerContext} from "../../context/ComposerProvider"
 
-const toBaseDirection = direction => direction.includes('inbound') ? 'inbound' : 'outbound'
-const messageLabelClass = direction => `message-card-label text-code text-small ${toBaseDirection(direction)}`
-const messageLabelRotation = direction => toBaseDirection(direction) === 'inbound' ? 180 : 0
+// const toBaseDirection = direction => direction.includes('inbound') ? 'inbound' : 'outbound'
+const toBaseDirection = (toNumber, iNumber) => toNumber === iNumber ? 'outbound' : 'inbound'
+// const messageLabelClass = direction => `message-card-label text-code text-small ${toBaseDirection(direction)}`
+const messageLabelClass = (toNumber, iNumber) => `message-card-label text-code text-small ${toBaseDirection(toNumber, iNumber)}`
+// const messageLabelRotation = direction => toBaseDirection(direction) === 'inbound' ? 180 : 0
+const messageLabelRotation = (toNumber, iNumber) => toBaseDirection(toNumber, iNumber) === 'inbound' ? 180 : 0
 const copyStyle = {padding: '0', margin: '0'}
 
 const toDateString = (date) => {
@@ -34,15 +37,15 @@ const messageActionOnClick = (baseDirection, from, to, setComposerContext, onAct
 }
 
 const MessageCard = ({messageSid='', direction='', from='', to='',
-                      date=new Date(), status='', body='', onActionClick=()=>{}}) => {
+                      date=new Date(), status='', body='', interestedPhoneNumber='', onActionClick=()=>{}}) => {
 
   const [ , setComposerContext] = useComposerContext()
-  const baseDirection = toBaseDirection(direction)
+  const baseDirection = toBaseDirection(to, interestedPhoneNumber)
 
   return <>
     <div className="message-card">
-      <div className={messageLabelClass(direction)}>
-        <RightCircleFilled rotate={messageLabelRotation(direction)} />
+      <div className={messageLabelClass(to, interestedPhoneNumber)}>
+        <RightCircleFilled rotate={messageLabelRotation(to, interestedPhoneNumber)} />
       </div>
       <div className="message-card-main-container">
         <div className="message-card-header text-tiny">
@@ -50,25 +53,25 @@ const MessageCard = ({messageSid='', direction='', from='', to='',
           <CopyToClipboard txt={from}/>
           <strong>From:</strong> {from}
         </span>
-          <span>
+        <span>
           <CopyToClipboard txt={to}/>
           <strong>To:</strong> {to}
         </span>
-          <span className="message-card-header-status">
+        {/* <span className="message-card-header-status">
           <strong>Status:</strong> {status}
-        </span>
-          <span>
+        </span> */}
+        {/* <span>
           <strong>Direction:</strong> {direction}
-        </span>
+        </span> */}
         </div>
         <div className="message-card-body text-code text-small">
           {body}
         </div>
         <div className="message-card-footer text-tiny">
           <strong>Date: </strong>{toDateString(date)}
-          <span>
+          {/* <span>
             <strong>MessageSid: </strong>{messageSid}
-          </span>
+          </span> */}
         </div>
         <div className="message-card-action-container">
           <MessageAction
